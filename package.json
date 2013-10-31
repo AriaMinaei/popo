@@ -22,5 +22,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/AriaMinaei/popo/issues"
+  },
+  "dependencies": {
+    "when": "~2.5.1"
   }
 }
