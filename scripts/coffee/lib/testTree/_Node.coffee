@@ -1,10 +1,10 @@
 module.exports = class _Node
 
-	constructor: (@_parent, options = {}) ->
+	constructor: (@_parent, @_options = {}) ->
 
 		@_prepared = no
 
-		@_skipped = Boolean options.skipped
+		@_skipped = Boolean @_options.skipped
 
 		@_init.apply @, arguments
 
