@@ -25,7 +25,7 @@ aSuccessfulRunner = ->
 
 	new TestFunctionRunner ->
 
-aFailingRunner = (error = "error") ->
+aFailingRunner = (error = "Some error message") ->
 
 	new TestFunctionRunner -> throw Error error
 
@@ -96,10 +96,11 @@ describe "run()"
 it "should always return a promise", ->
 
 	aSuccessfulRunner().run()
-	.should.satisfy TestFunctionRunner._isSinglePromise
+	.should.satisfy(TestFunctionRunner._isSinglePromise).and.be.fulfilled
 
 	aFailingRunner().run()
-	.should.satisfy TestFunctionRunner._isSinglePromise
+	.should.satisfy(TestFunctionRunner._isSinglePromise)
+	.and.be.rejected
 
 describe "run() - async"
 
@@ -144,6 +145,16 @@ it "should reject when throws an error, after done() is called", ->
 		throw Error()
 
 	r.run().should.be.rejected
+
+_it "should not allow multiple calls to done()", ->
+
+	r = new TestFunctionRunner (done) ->
+
+		done()
+
+		done()
+
+	(-> r.run()).should.throw()
 
 it "should reject when returns a promise", ->
 
